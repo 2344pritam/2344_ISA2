@@ -1,4 +1,4 @@
-}pipeline {
+pipeline {
     agent any  // Use any available agent
 
     stages {
@@ -30,4 +30,4 @@
         }
     }
 }
-    }
+    
