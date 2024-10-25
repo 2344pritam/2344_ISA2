@@ -2,13 +2,7 @@ pipeline {
     agent any  
 
 
-    stages {  
-        stage('Clone Repository') {  
-            steps {  
-                // Checkout the repository containing the Dockerfile  
-                git branch: 'main', url: 'https://github.com/2344pritam/2344_ISA2.git'  
-            }  
-        }  
+    
 
         stage('Build Docker Image') {  
             steps {  
