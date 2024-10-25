@@ -1,34 +1,35 @@
-pipeline {
-    agent any  // Use any available agent
+pipeline {  
+    agent any  
 
-    stages {
-        stage('Clone repository') {
-            steps {
-                script {
-                    git 'https://github.com/2344pritam/2344_ISA2.git'
-                }
-            }
-        }
-		
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build the Docker image from the Dockerfile in the current directory
-                    docker.build('2344_image')
-                }
-            }
-        }
-		
-        stage('Deploy Container') {
-            steps {
-                script {
-                    // Remove any existing container with the same name to avoid conflicts
-                    sh 'docker rm -f 2344 || true'
-					sh 'docker run -d --name 2344 -p 5000:50000 2344_image'
-            }
-        }
-    }
+    stages {  
+        stage('Clone Repository') {  
+            steps {  
+                // Checkout the repository containing the Dockerfile  
+                git branch: 'main', url: ''  
+            }  
+        }  
+
+        stage('Build Docker Image') {  
+            steps {  
+                script {  
+                    // Build the Docker image  
+                    bat "docker build -t 2344mca/2344_isa2 ."
+                }  
+            }  
+        }    
+    }  
+
+    post {  
+        always {  
+            // Clean up workspace  
+            cleanWs()  
+        }  
+        success {  
+            echo "Docker image built successfully."  
+        }  
+        failure {  
+            echo "There was an error building the Docker image."  
+        }  
+    }  
 }
-    }
-
